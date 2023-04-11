@@ -81,15 +81,15 @@
   <form action="/post/addExpense" method="POST">
     <div class="form-group">
       <label for="amount" class="text-primary">Expense Amount:</label>
-      <input type="text" id="amount" class="form-control">
+      <input type="text" id="amount" class="form-control" value="0">
     </div>
     <div class="form-group">
       <label for="desc" class="text-success">Choose Description:</label>
-      <input type="text" id="desc" class="form-control">
+      <input type="text" id="desc" class="form-control" value="">
     </div>
     <div class="form-group">
       <label for="category" class="text-danger">Choose a category:</label>
-      <select id="category" name="category" class="form-select">
+      <select id="category" name="category" class="form-select" value="Fuel">
         <option value="Fuel">Fuel</option>
         <option value="Movies">Movies</option>
         <option value="Food">Food</option>

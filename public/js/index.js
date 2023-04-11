@@ -31,8 +31,8 @@ const displayExpenses = (expenses) => {
       <td>${expense.category}</td>
       <td>${expense.amount}</td>
       <td>
-        <button class="btn btn-danger" data-id="${expense.id}">Delete</button>
-        <button class="btn btn-primary" data-id="${expense.id}" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+        <button class="btn btn-danger" style="background-color: black; color: white;" data-id="${expense.id}">Delete</button>
+        <button class="btn btn-primary" style="background-color: blue; color: white;" data-id="${expense.id}" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
       </td>
     `;
     // Add event listener for delete button
@@ -62,10 +62,21 @@ const displayExpenses = (expenses) => {
       axios.get(`/get/editExpense/${id}`)
         .then((response) => {
           const expense = response.data;
-          document.querySelector('#editId').value = expense.id;
-          document.querySelector('#editCategory').value = expense.category;
-          document.querySelector('#editDesc').value = expense.description;
-          document.querySelector('#editAmount').value = expense.amount;
+          axios.get(`/get/deleteExpense/${id}`) 
+            .then(() => {
+              categoryInput.value = expense.category !== undefined ? expense.category : '';
+              descInput.value = expense.description !== undefined ? expense.description : '';
+              amountInput.value = expense.amount !== undefined ? expense.amount : '';
+            // If the expense is successfully deleted, fetch all expenses and display them again
+              axios.get('/get/getAllExpenses')
+                .then((response) => {
+                  displayExpenses(response.data);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+          //document.querySelector('#editId').value = expense.id;
         })
         .catch((error) => {
           console.log(error);
@@ -90,11 +101,11 @@ axios.get('/get/getAllExpenses')
   });
 
 // Function to reset the form after submitting an expense
-const resetForm = (expense) => {
+const resetForm = () => {
   amountInput.value = '';
   descInput.value = '';
   categoryInput.value = 'Fuel';
-  displayExpenses([expense]);
+  
 };
 
 // Add event listener for form submission
