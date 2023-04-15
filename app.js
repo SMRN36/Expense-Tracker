@@ -3,17 +3,28 @@ const bodyParser = require("body-parser");
 const sequelize = require("./utils/database");
 const expenseRouter = require("./routes/expenseRoute");
 
+const cors = require('cors');
+
+
 const app = express();
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(cors())
+
 app.use(bodyParser.json());
 
-app.use("/get", expenseRouter);
-app.use("/post", expenseRouter);
+app.use(bodyParser.urlencoded({extended : false}));
+
+app.set('views', 'views');
+
+app.use(expenseRouter);
 
 sequelize.sync()
-.then((result) => {
-    app.listen(3000);
+.then(() => {
+    app.listen('3000', () => {
+        console.log("listening on port 3000");
+    })
 })
-.catch((err) => console.log(err));
+.catch(err => {
+    console.log(err);
+})
 

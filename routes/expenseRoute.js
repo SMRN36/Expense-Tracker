@@ -1,22 +1,36 @@
+// const express = require("express");
+// const router = express.Router();
+// const expenseController = require("../controllers/expenseController");
+
+// router.use(express.static("public"));
+
+// router.get("/mainPage", expenseController.mainPage);
+
+// router.get("/expenses", expenseController.getAllExpenses);
+
+// router.delete("/expenses/:id", expenseController.deleteExpense);
+
+// router.put("/expenses/:id", expenseController.editExpense);
+
+// router.post("/expenses", expenseController.addExpense);
+
+// module.exports = router;
+
 const express = require("express");
+
 const router = express.Router();
-const expenseController = require("../controllers/expenseController");
 
-router.use(express.static("public"));
 
-router.get("/mainPage", expenseController.mainPage);
 
-router.get("/getAllExpenses", expenseController.getAllExpense);
+const userControllers = require("../controllers/expenseController");
+router.get("/editExpense", userControllers.editExpense);
 
-router.get("/deleteExpense/:id", expenseController.deleteExpense);
+router.get("/deleteExpense", userControllers.deleteExpense);
 
-router.post("/editExpense/:id", expenseController.editExpense);
+router.get("/getExpenses", userControllers.getExpenses);
 
-router.post("/addExpense", expenseController.addExpense);
+router.post("/newExpense", userControllers.postExpense);
 
-router.get("/editExpense/:id", expenseController.editExpense);
+router.get("/", userControllers.getExpensesPage);
+
 module.exports = router;
-
-
-
-
